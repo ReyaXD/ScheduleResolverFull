@@ -1,0 +1,43 @@
+import 'package:flutter/material.dart';
+
+class TaskModel {
+  final String id;
+  final String title;
+  final String category;
+  final DateTime date;
+  final TimeOfDay startTime;
+  final TimeOfDay endTime;
+  final int urgency;
+  final int importance;
+  final double estimatedEffortHours; // Renamed for consistency (removed the 's')
+  final String energyLevel;
+
+  TaskModel({
+    required this.id,
+    required this.title,
+    required this.category,
+    required this.date, // Fixed: was 'this.time', which didn't exist
+    required this.startTime,
+    required this.endTime,
+    required this.urgency,
+    required this.importance,
+    required this.estimatedEffortHours,
+    required this.energyLevel,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title, // Fixed syntax: was 'title': 'category' : category
+      'category': category,
+      'date': date.toIso8601String().split('T').first,
+      // Added padding to ensure time formats like 09:05 instead of 9:5
+      'startTime': '${startTime.hour.toString().padLeft(2, '0')}:${startTime.minute.toString().padLeft(2, '0')}',
+      'endTime': '${endTime.hour.toString().padLeft(2, '0')}:${endTime.minute.toString().padLeft(2, '0')}',
+      'urgency': urgency,
+      'importance': importance,
+      'estimatedEffortHours': estimatedEffortHours,
+      'energyLevel': energyLevel,
+    };
+  }
+}
